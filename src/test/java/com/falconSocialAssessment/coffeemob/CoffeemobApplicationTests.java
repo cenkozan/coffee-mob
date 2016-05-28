@@ -1,4 +1,4 @@
-package coffeemob;
+package com.falconSocialAssessment.coffeeMob;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,9 +7,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = CoffeemobApplication.class)
+@SpringApplicationConfiguration(classes = CoffeeMobApplication.class)
 @WebAppConfiguration
-public class CoffeemobApplicationTests {
+public class CoffeeMobApplicationTests {
 
 	@Test
 	public void contextLoads() {

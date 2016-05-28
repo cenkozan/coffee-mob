@@ -1,12 +1,12 @@
-package coffeemob;
+package com.falconSocialAssessment.coffeeMob;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CoffeemobApplication {
+public class CoffeeMobApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CoffeemobApplication.class, args);
+		SpringApplication.run(CoffeeMobApplication.class, args);
 	}
 }

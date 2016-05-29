@@ -17,8 +17,7 @@ public class CoffeeShopController {
     }
 
     @RequestMapping(value = "/coffee-shop", method = RequestMethod.PUT)
-    public @ResponseBody
-    String saveCoffeeShop(@RequestBody CoffeeShopRequest coffeeShopRequest) {
+    public @ResponseBody String saveCoffeeShop(@RequestBody CoffeeShopRequest coffeeShopRequest) {
         coffeeShopService.saveCoffeeShop(coffeeShopRequest);
         return "Coffee Shop successfully created";
     }

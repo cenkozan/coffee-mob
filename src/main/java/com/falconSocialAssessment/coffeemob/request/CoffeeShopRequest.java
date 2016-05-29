@@ -1,5 +1,7 @@
 package com.falconSocialAssessment.coffeeMob.request;
 
+import com.falconSocialAssessment.coffeeMob.domain.CoffeeShop;
+
 import java.util.Date;
 
 public class CoffeeShopRequest {
@@ -39,5 +41,10 @@ public class CoffeeShopRequest {
 
     public void setDiscount(String discount) {
         this.discount = discount;
+    }
+
+    public CoffeeShop toCoffeeShop() {
+        CoffeeShop coffeeShop = new CoffeeShop(this.coffeeName, this.date, this.discount, this.location);
+        return coffeeShop;
     }
 }

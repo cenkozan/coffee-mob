@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Coffee Mob</title>
+  <script src="sockjs-1.1.1.min.js"></script>
+  <script src="stomp.min.js"></script>
+  <script type="text/javascript">
+    var stompClient = null;
+
+    function connect() {
+      var socket = new SockJS('/hello');
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.send("/app/hello");
+        stompClient.subscribe('/topic/greetings', function (greeting) {
+          showGreeting(greeting.body);
+        });
+      });
+    }
+
+    function showGreeting(message) {
+      var response = document.getElementById('response');
+      var p = document.createElement('p');
+      p.style.wordWrap = 'break-word';
+      p.appendChild(document.createTextNode(message));
+      response.appendChild(p);
+    }
+  </script>
+</head>
+<body onload="connect()">
+<h1>Welcome to Coffee Mob</h1>
+<p>After work hours, we join the mob, and raid Coffee Shops around town</p>
+<p>We talk with the owners and try to score Discounts</p>
+<p>If you are a Coffee Shop owner, don't hesitate to contact us</p>
+<h2>Here is today's Coffee Shop:</h2>
+<div>
+  <div id="todayDiv"/>
+</div>
+<h2>Here are the past Coffee Shops if you want to visit them again:</h2>
+<div>
+  <div id="pastDiv"/>
+</div>
+</body>
+</html>

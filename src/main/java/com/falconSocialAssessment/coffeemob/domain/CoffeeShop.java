@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
 @Entity
 public class CoffeeShop {
@@ -13,14 +12,14 @@ public class CoffeeShop {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
     private String coffeeShopName;
-    private Date date;
+    private String date;
     private String discount;
     private String location;
 
     protected CoffeeShop() {
     }
 
-    public CoffeeShop(String coffeeShopName, Date date, String discount, String location) {
+    public CoffeeShop(String coffeeShopName, String date, String discount, String location) {
         this.coffeeShopName = coffeeShopName;
         this.date = date;
         this.discount = discount;
@@ -35,11 +34,11 @@ public class CoffeeShop {
         this.coffeeShopName = coffeeShopName;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

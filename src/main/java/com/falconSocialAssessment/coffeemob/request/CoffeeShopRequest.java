@@ -2,12 +2,10 @@ package com.falconSocialAssessment.coffeeMob.request;
 
 import com.falconSocialAssessment.coffeeMob.domain.CoffeeShop;
 
-import java.util.Date;
-
 public class CoffeeShopRequest {
 
     private String coffeeName;
-    private Date date;
+    private String date;
     private String discount;
     private String location;
 
@@ -19,11 +17,11 @@ public class CoffeeShopRequest {
         this.coffeeName = coffeeName;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

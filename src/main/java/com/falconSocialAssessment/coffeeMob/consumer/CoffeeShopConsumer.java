@@ -16,9 +16,13 @@ public class CoffeeShopConsumer implements MessageListener {
 
     @Override
     public void onMessage(Message message, final byte[] pattern ) {
-        System.out.println( "Message received: " + message.toString() );
         Gson gson = new Gson();
-        CoffeeShop coffeeShop = gson.fromJson(message.toString(), CoffeeShop.class);
+        CoffeeShop coffeeShopFromJSON = gson.fromJson(message.toString(), CoffeeShop.class);
+        CoffeeShop coffeeShop = new CoffeeShop();
+        coffeeShop.setCoffeeShopName(coffeeShopFromJSON.getCoffeeShopName());
+        coffeeShop.setDate(coffeeShopFromJSON.getDate());
+        coffeeShop.setDiscount(coffeeShopFromJSON.getDiscount());
+        coffeeShop.setLocation(coffeeShopFromJSON.getLocation());
         coffeeShopService.saveCoffeeShopToDb(coffeeShop);
     }
 }

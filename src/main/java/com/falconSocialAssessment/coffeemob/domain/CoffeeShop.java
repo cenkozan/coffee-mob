@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class CoffeeShop {
@@ -16,7 +18,7 @@ public class CoffeeShop {
     private String discount;
     private String location;
 
-    protected CoffeeShop() {
+    public CoffeeShop() {
     }
 
     public CoffeeShop(String coffeeShopName, String date, String discount, String location) {
@@ -63,5 +65,11 @@ public class CoffeeShop {
         return String.format(
                 "CoffeeShop[id=%d, coffeeShopName='%s', date='%s', discount='%s, location='%s]",
                 id, coffeeShopName, date, discount, location);
+    }
+
+    public boolean isValid() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateTime = LocalDate.parse(this.date, formatter);
+        return (dateTime.isBefore(LocalDate.now()) || dateTime.isEqual(LocalDate.now()));
     }
 }

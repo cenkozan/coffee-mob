@@ -2,44 +2,111 @@
 <html>
 <head>
   <title>Coffee Mob</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="sockjs-1.1.1.min.js"></script>
   <script src="stomp.min.js"></script>
+  <script src="moment.min.js"></script>
   <script type="text/javascript">
-    var stompClient = null;
+    var stompClient = null, i = 0;
 
     function connect() {
-      var socket = new SockJS('/hello');
+      var socket = new SockJS('/coffee-shops');
       stompClient = Stomp.over(socket);
-      stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
-        stompClient.send("/app/hello");
-        stompClient.subscribe('/topic/greetings', function (greeting) {
-          showGreeting(greeting.body);
+      stompClient.connect({}, function () {
+        stompClient.send('/app/coffee-shops');
+        stompClient.subscribe('/topic/coffee-shops', function (coffeeShops) {
+          showCoffeeShops(JSON.parse(coffeeShops.body));
         });
       });
     }
 
-    function showGreeting(message) {
-      var response = document.getElementById('response');
-      var p = document.createElement('p');
-      p.style.wordWrap = 'break-word';
-      p.appendChild(document.createTextNode(message));
-      response.appendChild(p);
+    function showCoffeeShops(coffeeShops) {
+      if (coffeeShops && coffeeShops.length > 0 && coffeeShops instanceof Array) {
+        for (; i < coffeeShops.length; i++) {
+          checkDateThenAdd(coffeeShops[i]);
+        }
+      } else if (coffeeShops) {
+        checkDateThenAdd(coffeeShops);
+      }
     }
+
+    function checkDateThenAdd(coffeeShop) {
+      if (moment(coffeeShop.date).isSame(moment().startOf('day'))) {
+        addToCoffeeShops(coffeeShop, 'today');
+      } else if (moment(coffeeShop.date).isAfter(moment().startOf('day'))) {
+      }
+      else {
+        addToCoffeeShops(coffeeShop, 'past');
+      }
+    }
+
+    function addToCoffeeShops(coffeeShop, when) {
+      var table = document.getElementById(when + 'Table'),
+        row = table.insertRow(),
+        coffeeShopNameCell = row.insertCell(0),
+        dateCell = row.insertCell(1),
+        discountCell = row.insertCell(2),
+        locationCell = row.insertCell(3);
+      coffeeShopNameCell.innerHTML = coffeeShop.coffeeShopName;
+      dateCell.innerHTML = coffeeShop.date;
+      discountCell.innerHTML = coffeeShop.discount ? coffeeShop.discount : 'No Discount';
+      locationCell.innerHTML = coffeeShop.location;
+    }
+
   </script>
 </head>
+
 <body onload="connect()">
-<h1>Welcome to Coffee Mob</h1>
-<p>After work hours, we join the mob, and raid Coffee Shops around town</p>
-<p>We talk with the owners and try to score Discounts</p>
-<p>If you are a Coffee Shop owner, don't hesitate to contact us</p>
-<h2>Here is today's Coffee Shop:</h2>
-<div>
-  <div id="todayDiv"/>
-</div>
-<h2>Here are the past Coffee Shops if you want to visit them again:</h2>
-<div>
-  <div id="pastDiv"/>
-</div>
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+  </div>
+  <div class="jumbotron">
+    <h1>Welcome to Coffee Mob</h1>
+  </div>
+  <h4>After work hours, we join the mob, and raid Coffee Shops around town</h4>
+  &nbsp
+  <h4>We talk with the owners and try to score Discounts</h4>
+  &nbsp
+  <h4>If you are a Coffee Shop owner, contact us</h4>
+  &nbsp
+  &nbsp
+  &nbsp
+  <h2>Here is/are today's Coffee Shop/s:</h2>
+  <div>
+    <div id="todayDiv">
+      <table id="todayTable" class="table">
+        <thead>
+        <tr>
+          <th>Coffee Shop Name</th>
+          <th>Date</th>
+          <th>Discount</th>
+          <th>Location</th>
+        </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  <h2>Here are the past Coffee Shops if you want to visit them again:</h2>
+  <div>
+    <div id="pastDiv">
+      <table id="pastTable" class="table">
+        <thead>
+        <tr>
+          <th>Coffee Shop Name</th>
+          <th>Date</th>
+          <th>Discount</th>
+          <th>Location</th>
+        </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</div> <!-- container -->
 </body>
+
 </html>

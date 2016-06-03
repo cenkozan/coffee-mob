@@ -16,10 +16,10 @@ import java.util.Map;
 public class CoffeeShopServiceImpl implements CoffeeShopService {
 
     @Autowired
-    private RedisTemplate<String, Object> template;
+    RedisTemplate<String, Object> template;
 
     @Autowired
-    private CoffeeShopRepository coffeeShopRepository;
+    CoffeeShopRepository coffeeShopRepository;
 
     @Override
     public void saveCoffeeShopToDb(CoffeeShop coffeeShop) {
@@ -31,7 +31,7 @@ public class CoffeeShopServiceImpl implements CoffeeShopService {
         final String key = String.format("name:%s", coffeeShopRequest.getCoffeeName());
         final Map<String, Object> properties = new HashMap<>();
         properties.put("name", coffeeShopRequest.getCoffeeName());
-        properties.put("date", coffeeShopRequest.getDate().toString());
+        properties.put("date", coffeeShopRequest.getDate());
         properties.put("discount", coffeeShopRequest.getDiscount());
         properties.put("location", coffeeShopRequest.getLocation());
         template.opsForHash().putAll(key, properties);

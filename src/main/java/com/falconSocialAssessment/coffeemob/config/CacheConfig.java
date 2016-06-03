@@ -29,7 +29,7 @@ public class CacheConfig {
     }
 
     @Bean
-    RedisTemplate< String, Object > redisTemplate() {
+    RedisTemplate<String, Object> redisTemplate() {
         final RedisTemplate<String, Object> template =  new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
         template.setKeySerializer(new StringRedisSerializer());

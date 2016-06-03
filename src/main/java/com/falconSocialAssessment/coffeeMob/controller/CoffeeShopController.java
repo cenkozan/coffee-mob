@@ -35,7 +35,9 @@ public class CoffeeShopController {
     public @ResponseBody String saveCoffeeShop(@RequestBody @Valid CoffeeShopRequest coffeeShopRequest) {
         CoffeeShop coffeeShop = coffeeShopRequest.toCoffeeShop();
         coffeeShopService.saveCoffeeShopToRedis(coffeeShopRequest);
+        //Publish to redis, so that our consumer can save this data to mysql db.
         coffeeShopPublisher.publish(coffeeShop);
+        //Our connected websocket clients will receive the latest incoming data.
         template.convertAndSend(topic, coffeeShop);
         return "Coffee shop successfully created.";
     }

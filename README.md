@@ -16,6 +16,7 @@ Important information about our app:
 5.  We are going to publish all our database data through an end-point.
 6.  We are also going to create a simple HTML web page that listens our Amazon app through a Web Socket.
 7.  We are packaging our app as a jar. To deploy the jar to Amazon, we are going to use scp.
+8.  To package the app use: "mvn package" after making sure there are no compilation errors or failing tests.
 8.  I have the necessary .pem file that is needed to ssh and scp the jar file.
 9.  After copying the jar file, ssh to Amazon, and run java -jar coffeeMob-1.0.jar
 	
